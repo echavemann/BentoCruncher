@@ -59,13 +59,16 @@ def get_date(file_name):
 
 
 
-def parse(data_folder_name = 'data'):
+def parse(data_folder_name = 'data', directory = None):
     """
     put this file under a folder with supplied name (default to data)
     it will parse the raw databento csv under same directory into readable formats
     """
-    
-    file_path = os.getcwd()
+    if directory == None:
+        file_path = os.getcwd()
+    else:
+        file_path = directory
+        
     files = os.listdir(file_path)
     data_files =  []
     
@@ -73,8 +76,8 @@ def parse(data_folder_name = 'data'):
         if file.endswith('ohlcv-1m.csv'):
             data_files.append(file)
 
+    if data_files == []: raise ValueError('No file ending in ohlcv-1m.csv found in specified directory')
     mapping, tickers = get_ticker_mapping()
-    
     
     for file in sorted(data_files):
             
@@ -100,8 +103,8 @@ def parse(data_folder_name = 'data'):
             d = mapping[d]
             d = dict(zip(d.values(),d.keys()))
             t = []
-            for i, row_value in cleaned['product_id'].iteritems():
-                t.append( d[str(row_value)])
+            for i, row_value in cleaned['product_id'].items():
+                t.append(d[str(row_value)])
             cleaned['ticker'] = t
 
             date_str = get_date(file)
@@ -109,13 +112,17 @@ def parse(data_folder_name = 'data'):
             for ticker in tickers:
                 ticker_data = cleaned[cleaned['ticker'] == ticker]
                 if not ticker_data.empty:
-                    ticker_data.to_csv(f"{ticker}-{date_str}.csv")
+                    ticker_data_file_path = os.path.join(file_path, ticker)
+                    if not os.path.exists(ticker_data_file_path):
+                        os.makedirs(ticker_data_file_path)
+                    ticker_data.to_csv(os.path.join(ticker_data_file_path,f"{ticker}-{date_str}.csv"))
 
             del df
             del cleaned
 
-
+import time
+start_time = time.time()
 parse()
-            
+print("--- %s seconds ---" % (time.time() - start_time))
     
 
