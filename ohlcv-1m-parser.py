@@ -59,24 +59,37 @@ def get_date(file_name):
 
 
 
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 def parse(data_folder_name = 'RAW'):
 =======
 def parse(data_folder_name = 'data', directory = None):
 >>>>>>> dfbef386150a8ce9fc32d9d52ec7bf67aecdb845
+=======
+def parse(target = None, source = None):
+>>>>>>> Stashed changes
     """
     put this file under a folder with supplied name (default to data)
     it will parse the raw databento csv under same directory into readable formats
     """
+<<<<<<< Updated upstream
 <<<<<<< HEAD
     
     path = os.getcwd()
     file_path = os.path.join(path, "RAW")
 =======
     if directory == None:
+=======
+    if source == None:
+>>>>>>> Stashed changes
         file_path = os.getcwd()
     else:
-        file_path = directory
+        file_path = source
+        
+    if target == None:
+        target = file_path
+    else:
+        target_file_path = target
         
 >>>>>>> dfbef386150a8ce9fc32d9d52ec7bf67aecdb845
     files = os.listdir(file_path)
@@ -127,7 +140,7 @@ def parse(data_folder_name = 'data', directory = None):
             for ticker in tickers:
                 ticker_data = cleaned[cleaned['ticker'] == ticker]
                 if not ticker_data.empty:
-                    ticker_data_file_path = os.path.join(file_path, ticker)
+                    ticker_data_file_path = os.path.join(target_file_path, ticker)
                     if not os.path.exists(ticker_data_file_path):
                         os.makedirs(ticker_data_file_path)
                     ticker_data.to_csv(os.path.join(ticker_data_file_path,f"{ticker}-{date_str}.csv"))
