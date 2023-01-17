@@ -59,7 +59,7 @@ def get_date(file_name):
 
 
 
-def parse(data_folder_name = 'data', directory = None):
+def parse(directory = None):
     """
     put this file under a folder with supplied name (default to data)
     it will parse the raw databento csv under same directory into readable formats
