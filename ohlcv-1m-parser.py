@@ -59,14 +59,26 @@ def get_date(file_name):
 
 
 
+<<<<<<< HEAD
 def parse(data_folder_name = 'RAW'):
+=======
+def parse(data_folder_name = 'data', directory = None):
+>>>>>>> dfbef386150a8ce9fc32d9d52ec7bf67aecdb845
     """
     put this file under a folder with supplied name (default to data)
     it will parse the raw databento csv under same directory into readable formats
     """
+<<<<<<< HEAD
     
     path = os.getcwd()
     file_path = os.path.join(path, "RAW")
+=======
+    if directory == None:
+        file_path = os.getcwd()
+    else:
+        file_path = directory
+        
+>>>>>>> dfbef386150a8ce9fc32d9d52ec7bf67aecdb845
     files = os.listdir(file_path)
     
     data_files =  []
@@ -75,8 +87,8 @@ def parse(data_folder_name = 'RAW'):
         if file.endswith('ohlcv-1m.csv'):
             data_files.append(file)
 
+    if data_files == []: raise ValueError('No file ending in ohlcv-1m.csv found in specified directory')
     mapping, tickers = get_ticker_mapping()
-    
     
     for file in sorted(data_files):
             
@@ -103,7 +115,11 @@ def parse(data_folder_name = 'RAW'):
             d = dict(zip(d.values(),d.keys()))
             t = []
             for i, row_value in cleaned['product_id'].items():
+<<<<<<< HEAD
                 t.append( d[str(row_value)])
+=======
+                t.append(d[str(row_value)])
+>>>>>>> dfbef386150a8ce9fc32d9d52ec7bf67aecdb845
             cleaned['ticker'] = t
 
             date_str = get_date(file)
@@ -111,13 +127,18 @@ def parse(data_folder_name = 'RAW'):
             for ticker in tickers:
                 ticker_data = cleaned[cleaned['ticker'] == ticker]
                 if not ticker_data.empty:
-                    ticker_data.to_csv(f"{ticker}-{date_str}.csv")
+                    ticker_data_file_path = os.path.join(file_path, ticker)
+                    if not os.path.exists(ticker_data_file_path):
+                        os.makedirs(ticker_data_file_path)
+                    ticker_data.to_csv(os.path.join(ticker_data_file_path,f"{ticker}-{date_str}.csv"))
 
             del df
             del cleaned
+            del ticker_data
 
-
+import time
+start_time = time.time()
 parse()
-            
+print("--- %s seconds ---" % (time.time() - start_time))
     
 
