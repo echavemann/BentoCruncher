@@ -101,17 +101,18 @@ def parse(target = None, source = None):
                     df[col] = df[col].astype(float)
                 cleaned[col] = df[col]/1000000000
                     
-            cleaned['ts_event'] = pd.to_datetime(df['ts_event'], unit='ns', origin='unix')
+            cleaned['timestamp'] = pd.to_datetime(df['ts_event'], unit='ns', origin='unix')
             cleaned['volume'] = df['volume']
             cleaned['product_id'] = df['product_id']
             cleaned['ticker'] = cleaned['product_id']
-            d = cleaned.iloc[1]['ts_event'].strftime("%Y-%m-%d")
+            d = cleaned.iloc[1]['timestamp'].strftime("%Y-%m-%d")
             d = mapping[d]
             d = dict(zip(d.values(),d.keys()))
             t = []
             for i, row_value in cleaned['product_id'].items():
                 t.append(d[str(row_value)])
             cleaned['ticker'] = t
+            cleaned = cleaned.drop('ts_event', axis=1)
 
             date_str = get_date(file)
 
@@ -122,14 +123,14 @@ def parse(target = None, source = None):
                     if not os.path.exists(ticker_data_file_path):
                         os.makedirs(ticker_data_file_path)
                     ticker_data.to_csv(os.path.join(ticker_data_file_path,f"{ticker}-{date_str}.csv"))
-
             del df
             del cleaned
             del ticker_data
 
 import time
 start_time = time.time()
-parse()
+parse(  source = '/Users/jialechen/Documents/GitHub/BentoCruncher',
+        target = '/Users/jialechen/Documents/GitHub/BentoCruncher/Nasdaq')
 print("--- %s seconds ---" % (time.time() - start_time))
     
 
