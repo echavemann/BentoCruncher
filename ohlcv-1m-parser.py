@@ -10,7 +10,7 @@ import os
 def get_ticker_mapping():
     
     path = os.getcwd()
-    file_path = os.path.join(path, "metadata.json")
+    file_path = os.path.join(path, "RAW/metadata.json")
 
     with open(file_path) as f:
         meta_data = json.load(f)
@@ -59,14 +59,16 @@ def get_date(file_name):
 
 
 
-def parse(data_folder_name = 'data'):
+def parse(data_folder_name = 'RAW'):
     """
     put this file under a folder with supplied name (default to data)
     it will parse the raw databento csv under same directory into readable formats
     """
     
-    file_path = os.getcwd()
+    path = os.getcwd()
+    file_path = os.path.join(path, "RAW")
     files = os.listdir(file_path)
+    
     data_files =  []
     
     for file in files: 
@@ -100,7 +102,7 @@ def parse(data_folder_name = 'data'):
             d = mapping[d]
             d = dict(zip(d.values(),d.keys()))
             t = []
-            for i, row_value in cleaned['product_id'].iteritems():
+            for i, row_value in cleaned['product_id'].items():
                 t.append( d[str(row_value)])
             cleaned['ticker'] = t
 
