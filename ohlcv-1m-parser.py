@@ -119,6 +119,7 @@ def parse(data_folder_name = 'data', directory = None):
 
             del df
             del cleaned
+            del ticker_data
 
 import time
 start_time = time.time()
