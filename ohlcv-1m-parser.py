@@ -10,7 +10,7 @@ import os
 def get_ticker_mapping():
     
     path = os.getcwd()
-    file_path = os.path.join(path, "RAW/metadata.json")
+    file_path = os.path.join(path, "metadata.json")
 
     with open(file_path) as f:
         meta_data = json.load(f)
@@ -35,7 +35,8 @@ def get_ticker_mapping():
                     new_mapping[date][ticker] = s
     
     return new_mapping, tickers
-                                 
+                            
+            
                     
 def get_date(file_name):
     """
@@ -59,29 +60,12 @@ def get_date(file_name):
 
 
 
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-def parse(data_folder_name = 'RAW'):
-=======
-def parse(data_folder_name = 'data', directory = None):
->>>>>>> dfbef386150a8ce9fc32d9d52ec7bf67aecdb845
-=======
 def parse(target = None, source = None):
->>>>>>> Stashed changes
     """
     put this file under a folder with supplied name (default to data)
     it will parse the raw databento csv under same directory into readable formats
     """
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-    
-    path = os.getcwd()
-    file_path = os.path.join(path, "RAW")
-=======
-    if directory == None:
-=======
     if source == None:
->>>>>>> Stashed changes
         file_path = os.getcwd()
     else:
         file_path = source
@@ -91,9 +75,7 @@ def parse(target = None, source = None):
     else:
         target_file_path = target
         
->>>>>>> dfbef386150a8ce9fc32d9d52ec7bf67aecdb845
     files = os.listdir(file_path)
-    
     data_files =  []
     
     for file in files: 
@@ -128,11 +110,7 @@ def parse(target = None, source = None):
             d = dict(zip(d.values(),d.keys()))
             t = []
             for i, row_value in cleaned['product_id'].items():
-<<<<<<< HEAD
-                t.append( d[str(row_value)])
-=======
                 t.append(d[str(row_value)])
->>>>>>> dfbef386150a8ce9fc32d9d52ec7bf67aecdb845
             cleaned['ticker'] = t
 
             date_str = get_date(file)
