@@ -9,5 +9,4 @@ else
   exit
 fi
 read -p "Enter directory to save this file to. " target
-
-#python3 ~/BentoCruncher/ohlcv-1m-parser.py target
+python3 ~/BentoCruncher/ohlcv-1m-parser.py target
