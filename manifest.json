@@ -1,0 +1,15 @@
+{
+    "job_id": "GLBX-20230126-CVWVNS8RDH",
+    "files": [
+        {
+            "filename": "metadata.json",
+            "size": 15178,
+            "hash": "sha256:9509042ebecb43eb3c2d20ee1a5978e5ac30a0a5857814b89da7d5a15841a1c3"
+        },
+        {
+            "filename": "glbx-mdp3-20221024-20230124.ohlcv-1m.csv",
+            "size": 23462063,
+            "hash": "sha256:12ca7058b8e0fb57bbde51c4750bea3451b25e63f8df6766441a45f301ade10d"
+        }
+    ]
+}
